@@ -18,8 +18,10 @@ dependencies = [
 classifiers = [
     "License :: OSI Approved :: MIT License",
     "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
     "Topic :: Software Development :: Libraries :: Python Modules",
     "Topic :: Software Development :: Build Tools",
 ]
@@ -38,8 +40,10 @@ plugins = ["pydantic.mypy"]
 [tool.ruff]
 line-length = 100
 preview = true
+unsafe-fixes = true
 
 [tool.ruff.lint]
+
 select = [
     "I", # Enable all isort rules
     "F", # Enable all flake8 rules
