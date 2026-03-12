@@ -2,7 +2,7 @@ import re
 from datetime import date, datetime
 from enum import StrEnum
 from functools import total_ordering
-from typing import ClassVar
+from typing import TYPE_CHECKING, Any, ClassVar
 
 import arrow
 from dateutil import parser as date_parser
@@ -79,6 +79,13 @@ class FlexDateTimeMixin:
       - self.dt: arrow.Arrow
       - self.mask: dict[str, bool]
     """
+
+    dt: arrow.Arrow
+    mask: dict[str, bool]
+
+    if TYPE_CHECKING:
+
+        def __init__(self, *args: Any, **kwargs: Any) -> None: ...
 
     _SHORT_DATETIME_FMT: ClassVar[str] = "YYYY-MM-DDTHH:mm:ss.SSSSSS"
     _BOUNDARY_RE: ClassVar[str] = r"^[^\d+-]+|[^\d+-]+$"
