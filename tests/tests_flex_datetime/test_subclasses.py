@@ -1,10 +1,10 @@
 import pytest
 
 from flexible_datetime import (
-    short_datetime,
     dict_datetime,
     iso_datetime,
     mask_datetime,
+    short_datetime,
 )
 
 

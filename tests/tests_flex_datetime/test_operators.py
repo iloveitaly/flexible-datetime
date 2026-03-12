@@ -1,6 +1,5 @@
 from datetime import datetime, timedelta
 
-import arrow
 import pytest
 
 from flexible_datetime import flex_datetime

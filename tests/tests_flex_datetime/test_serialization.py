@@ -3,6 +3,7 @@ from datetime import date, datetime
 
 import arrow
 import pytest
+from dateutil import parser as dateutil_parser
 from pydantic import BaseModel
 
 from flexible_datetime import FlexDateTime, flex_datetime
@@ -43,7 +44,6 @@ def test_from_datetime():
 
 
 def test_from_flexdatetime():
-
     fdt = FlexDateTime()
     ft = flex_datetime(fdt)
 
@@ -93,20 +93,18 @@ def test_from_flex():
 
 
 def test_from_flex_dict_mask():
-    ft = flex_datetime(
-        {
-            "dt": "2023-06-29",
-            "mask": {
-                "year": False,
-                "month": False,
-                "day": False,
-                "hour": True,
-                "minute": True,
-                "second": True,
-                "millisecond": True,
-            },
-        }
-    )
+    ft = flex_datetime({
+        "dt": "2023-06-29",
+        "mask": {
+            "year": False,
+            "month": False,
+            "day": False,
+            "hour": True,
+            "minute": True,
+            "second": True,
+            "millisecond": True,
+        },
+    })
     assert ft.dt == arrow.get("2023-06-29")
     mask = ft.mask_to_binary(ft.mask)
     assert mask == "0001111"
@@ -218,14 +216,10 @@ def test_from_dateutil_with_year():
 
 
 def test_from_natural_language():
-    # Since we're using dateutil.parser, let's align with its behavior
-    from dateutil import parser
-
     reference_time = arrow.get("2024-01-28 10:00:00", tzinfo="local")
     input_str = "next thursday at 2pm"
 
-    # Parse using dateutil to match the actual code path
-    parsed_dt = parser.parse(input_str, fuzzy=True)
+    parsed_dt = dateutil_parser.parse(input_str, fuzzy=True)
     if parsed_dt.year == 1900:  # Match the code's year fixing logic
         parsed_dt = parsed_dt.replace(year=reference_time.year)
 

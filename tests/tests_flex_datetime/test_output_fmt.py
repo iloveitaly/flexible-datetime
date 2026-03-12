@@ -1,6 +1,6 @@
 import pytest
 
-from flexible_datetime import flex_datetime, FDTOutputFormat
+from flexible_datetime import FDTOutputFormat, flex_datetime
 
 
 @pytest.fixture

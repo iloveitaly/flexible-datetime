@@ -67,7 +67,7 @@ def test_y():
 
 
 def test_y_str():
-    fdt = FlexDateTime(f"2023")
+    fdt = FlexDateTime("2023")
     assert fdt.dt == arrow.get("2023")
 
 

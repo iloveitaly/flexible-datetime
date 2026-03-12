@@ -11,7 +11,7 @@ def test_from_str_valid():
 
 def test_from_str_invalid():
     with pytest.raises(ValueError):
-        fdt = FlexDateTime.from_str("invalid date")
+        FlexDateTime.from_str("invalid date")
 
 
 def test_str_with_mask():
@@ -27,7 +27,7 @@ def test_str_no_mask():
 
 def test_str_invalid_datetime():
     with pytest.raises(ValueError):
-        fdt = FlexDateTime.from_str("invalid date")
+        FlexDateTime.from_str("invalid date")
 
 
 def test_year_only():

@@ -1,5 +1,5 @@
 import pytest
-from dateutil.parser._parser import ParserError
+
 from flexible_datetime.time_utils import infer_time_format
 
 
@@ -64,10 +64,7 @@ def test_format_YYYYMMDDTHHmmssSSSSSSZZ():
 
 
 def test_format_YYYY_MM_DDTHH_mm_ssSSSSSSZZ():
-    assert (
-        infer_time_format("2023-06-29T14:55:30.123456+00:00")
-        == "YYYY-MM-DDTHH:mm:ssSSSSSSZZ"
-    )
+    assert infer_time_format("2023-06-29T14:55:30.123456+00:00") == "YYYY-MM-DDTHH:mm:ssSSSSSSZZ"
 
 
 def test_invalid_format():
