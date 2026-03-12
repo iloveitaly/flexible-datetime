@@ -1,15 +1,14 @@
 import re
+
 from dateutil.parser import parse
 from dateutil.parser._parser import ParserError
-
-import re
-from dateutil.parser import parse
 
 
 def infer_time_format(date_str: str) -> str:
     """
     Infers the date format from the given date string, including handling various formats.
     """
+    # Remove any leading/trailing whitespace
     # Remove any leading/trailing whitespace
     date_str = date_str.strip()
 
@@ -27,10 +26,19 @@ def infer_time_format(date_str: str) -> str:
         (r"^\d{8}T\d{6}$", "YYYYMMDDTHHmmss"),
         (r"^\d{8}T\d{6}\.\d{3}$", "YYYYMMDDTHHmmssSSS"),
         (r"^\d{8}T\d{6}\.\d{6}$", "YYYYMMDDTHHmmssSSSSSS"),
-        (r"^\d{4}[-/]\d{2}[-/]\d{2}[T ]\d{2}:\d{2}:\d{2}\.\d{3}$", "YYYY-MM-DD[T]HH:mm:ssSSS"),
-        (r"^\d{4}[-/]\d{2}[-/]\d{2}[T ]\d{2}:\d{2}:\d{2}\.\d{6}$", "YYYY-MM-DD[T]HH:mm:ssSSSSSS"),
+        (
+            r"^\d{4}[-/]\d{2}[-/]\d{2}[T ]\d{2}:\d{2}:\d{2}\.\d{3}$",
+            "YYYY-MM-DD[T]HH:mm:ssSSS",
+        ),
+        (
+            r"^\d{4}[-/]\d{2}[-/]\d{2}[T ]\d{2}:\d{2}:\d{2}\.\d{6}$",
+            "YYYY-MM-DD[T]HH:mm:ssSSSSSS",
+        ),
         (r"^\d{8}T\d{6}\.\d{6}Z$", "YYYYMMDDTHHmmssSSSSSSZZ"),
-        (r"^\d{4}[-/]\d{2}[-/]\d{2}[T ]\d{2}:\d{2}:\d{2}\.\d{6}Z$", "%Y-%m-%dT%H:%M:%S.%f%z"),
+        (
+            r"^\d{4}[-/]\d{2}[-/]\d{2}[T ]\d{2}:\d{2}:\d{2}\.\d{6}Z$",
+            "%Y-%m-%dT%H:%M:%S.%f%z",
+        ),
     ]
 
     for pattern, fmt in formats:
