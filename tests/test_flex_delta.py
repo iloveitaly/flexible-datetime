@@ -8,6 +8,13 @@ from pydantic import BaseModel
 from flexible_datetime import FlexDateTime, flex_datetime, flex_delta
 
 
+def test_parse_relative_english_phrase_as_signed_duration():
+    assert flex_delta("12 weeks ago").components["weeks"] == -12
+    assert flex_delta("in 2 days").components["days"] == 2
+    assert flex_delta("an hour from now").components["hours"] == 1
+    assert str(flex_delta("12 weeks ago")) == "-12w"
+
+
 def test_parse_combined_duration_string():
     delta = flex_delta("2w1d")
     assert delta.components["weeks"] == 2

@@ -1,5 +1,6 @@
 import json
-from datetime import date, datetime
+from datetime import date, datetime, timedelta
+from unittest.mock import patch
 
 import arrow
 import pytest
@@ -213,6 +214,18 @@ def test_from_dateutil_with_year():
     ft = flex_datetime("Aug 28, 2024")
     assert ft.dt == arrow.get("2024-08-28")
     assert ft.mask_str == "0001111"
+
+
+def test_relative_weeks_ago_uses_utc_now_not_calendar_day():
+    """'N weeks ago' must be N weeks before now; dateutil fuzzy reads N as day-of-month."""
+    fixed = arrow.get("2026-05-06 15:30:00+00:00")
+    expected = fixed.datetime - timedelta(weeks=12)
+
+    with patch("flexible_datetime._base.arrow.utcnow", return_value=fixed):
+        ft = flex_datetime("12 weeks ago")
+
+    assert ft.to_datetime() == expected
+    assert ft.mask_str == "0000000"
 
 
 def test_from_natural_language():

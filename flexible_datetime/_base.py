@@ -7,6 +7,7 @@ from typing import TYPE_CHECKING, Any, ClassVar
 import arrow
 from dateutil import parser as date_parser
 
+from flexible_datetime.relative_nl import offset_datetime_for_relative_phrase
 from flexible_datetime.time_utils import infer_time_format
 
 MASK_FIELDS: tuple[str, ...] = (
@@ -106,6 +107,10 @@ class FlexDateTimeMixin:
 
     @classmethod
     def _parse_date_or_datetime(cls, s):
+        relative_dt = offset_datetime_for_relative_phrase(s, arrow.utcnow().datetime)
+        if relative_dt is not None:
+            return relative_dt
+
         time_pattern = re.compile(r"(\d:\d|am|pm|midnight|noon|\bat\s*\d)", re.IGNORECASE)
         has_time = bool(time_pattern.search(s))
         dt = date_parser.parse(s, fuzzy=True)

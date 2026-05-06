@@ -11,6 +11,8 @@ from dateutil.relativedelta import relativedelta
 from pydantic import GetCoreSchemaHandler
 from pydantic_core import core_schema
 
+from flexible_datetime.relative_nl import signed_components_for_relative_phrase
+
 FlexDeltaInput: TypeAlias = (
     "str | Mapping[str, int | str] | timedelta | relativedelta | flex_delta | None"
 )
@@ -124,7 +126,11 @@ class flex_delta:
 
     @classmethod
     def _components_from_str(cls, duration_str: str) -> dict[str, int]:
-        cleaned = duration_str.strip().lower()
+        stripped = duration_str.strip()
+        if rel := signed_components_for_relative_phrase(stripped):
+            return cls._normalize_components(rel)
+
+        cleaned = stripped.lower()
         if not cleaned:
             raise ValueError("Cannot parse an empty duration string.")
         cleaned = re.sub(r"\s*([+-])\s*", r"\1", cleaned)
