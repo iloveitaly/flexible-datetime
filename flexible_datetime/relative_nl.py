@@ -68,6 +68,7 @@ def _canonical_unit(token: str) -> RelativeTimeUnit | None:
             return unit
     return None
 
+
 _REL_AGO_RE = re.compile(
     rf"^\s*(?P<n>a|an|\d+)\s+(?P<unit>{_REL_UNIT_PATTERN})\s+ago\s*$",
     re.IGNORECASE,

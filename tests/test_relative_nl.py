@@ -61,9 +61,7 @@ def test_offset_datetime_for_each_unit(phrase: str, expected: datetime) -> None:
         ("10 hrs ago", {"hours": -10}),
     ],
 )
-def test_signed_components_for_each_unit(
-    phrase: str, components: dict[str, int]
-) -> None:
+def test_signed_components_for_each_unit(phrase: str, components: dict[str, int]) -> None:
     assert signed_components_for_relative_phrase(phrase) == components
 
 
